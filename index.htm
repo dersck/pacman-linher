@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<!--<html lang="en">-->
+<html lang="en" manifest="cache.manifest">
+<head>
+	<meta charset="utf-8" />
+	<title>Juega Pacman LINHER</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="pacman-canvas.css">
+	<link rel="manifest" href="manifest.json">
+
+
+	<!-- SEO Stuff -->
+    <meta name="description" content="Juega Pacman LINHER gratis en tu computadora o celular para celebrar el día de Pacman." />
+    <link rel="canonical" href="http://pacman.platzh1rsch.ch/" />
+    <meta name="author" content="Geekota" />
+    <meta name="publisher" content="Geekota" />
+    <meta name="copyright" content="&copy; Copyright (c) Geekota" />
+    <meta name="robots" content="index,follow" />
+    <meta name="language" content="es-MX">
+    <meta name="page-topic" content="Games/Arcade" />
+    <meta content="National" name="distribution" />
+
+
+   	<!-- Facebook Open Graph Information -->
+	<meta property="og:image" content="http://pacman.platzh1rsch.ch/img/Icon-200x200.png"/>
+    <meta property="og:title" content="Pacman LINHER" />
+	<meta property="og:description" content="Juega Pacman LINHER gratis en tu computadora o celular para celebrar el día de Pacman." />
+    <meta property="og:url" content="http://pacman.platzh1rsch.ch/" />
+    <meta property="og:site_name" content="Pacman LINHER" />
+	<meta property="og:locale" content="es_MX" />
+
+	<!-- site icons -->
+	<link rel="shortcut icon" href="img/Icon-130x130.png" />
+	<link rel="apple-touch-icon" href="img/Icon-130x130.png" />
+
+
+
+	<!-- AppsFuel verification code -->
+	<meta name="appsfuel_code" content="83d3cedc1050a5c"/>
+	
+	<!-- Mobile Viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+	
+	<!-- Apple Mobile Web Capability -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	
+	<!-- Script -->
+	<script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
+	<script src="js/jquery.hammer.min.js" type="text/javascript"></script>
+	
+
+	
+</head>
+
+<body>
+
+<div class="container">
+<div class="main">
+
+
+<!-- Mostrar este mensaje si JavaScript está deshabilitado -->
+<noscript>
+<h2>Habilitar Javascript</h2>
+<p>Esta APP requiere de JavaScript para funcionar. Por favor revisa que JavaScript está habilitado en tu neavegador.</p>
+</noscript>
+
+<!-- Highscore -->
+<div class="content" id="highscore-content">
+	<div class="button" id="back">&lt; Atrás</div>
+	<div>
+		<h1>Mejor puntuación</h1>
+		<p>
+			<ol id="highscore-list">
+				
+			</ol>
+		</p>
+	</div>
+</div>
+
+<!-- DRSK -->
+
+<!-- INSTRUCCIONES -->
+<div class="content" id="instructions-content">
+	<div class="button" id="back">&lt; Atrás</div>
+	<div>
+		<h1>Instrucciones</h1>
+		<div class="nomobile">
+			<h2>Controles</h2>
+			<p>Utiliza las teclas de flecha o las teclas [W,A,S,D] para navegar por pacman.</p>
+			<p>Para pausar/reanudar el juego pulsa [ESPACIO] o [ESC] o simplemente haz clic en el área de juego.</p>
+		</div>
+		<div class="mobile">
+			<h2>Controles</h2>
+			<p>Usa gestos de deslizamiento para navegar por pacman.</p>
+			<p>Alternativamente, utiliza los botones de flecha situados debajo del área de juego para navegar por pacman.</p>
+			<p>Para pausar / reanudar el juego, toca el área de juego una vez.</p>
+		</div>
+
+		<div>
+			<h2>Hornos</h2>
+			<p>Los hornos son criaturas que cazan a pacman y lo matarán si lo atrapan.</p>
+			<p>Cada horno tiene su propia estrategia para perseguir a pacman.</p>
+			<h3>Essential<img src="img/essential.svg" class="pull-right" style="width: 150px" height="auto"></h3>
+			Essential permanecerá en la base hasta que pacman se haya comido al menos 30 pastillas.	Su lugar es la esquina inferior derecha.
+			<h3>Plus <img src="img/plus.svg" class="pull-right" style="width: 150px" height="auto"> </h3>
+			Plus es el más agresivo de los 4 hornos. Empezará a perseguir a Pacman de inmediato y le apuntará directamente. Su lugar es la esquina superior derecha.
+			<h3>Goliat<img src="img/goliat.svg" class="pull-right" style="width: 150px" height="auto"></h3>
+			Goliat empezará a perseguir a pacman de inmediato, siempre apuntará 4 campos por delante y 4 campos a la izquierda de pacman. Su lugar es la esquina superior izquierda.
+			<h3>Express<img src="img/express.svg" class="pull-right" style="width: 150px" height="auto"></h3>
+			Express permanecerá en la base hasta que pacman se haya comido al menos 2/3 de todas las pastillas. Su lugar es la esquina inferior izquierda.
+		</div>
+
+		<div>
+			<h2>Estados de los hornos</h2>
+			Los hornos tienen dos estados de ánimo diferentes que cambian su forma de actuar durante el juego.
+			<h3>Estado de Dispersión</h3>
+			<p>Este es el estado de ánimo por defecto. Cuando los hornos están en estado de dispersión, se van a su rincón y se quedan allí.</p>
+			<img src="img/instructions/instrucciones_scatter.png">
+			<h3>Estado de Persecución</h3>
+			<p>Después de cierto tiempo, los hornos cambian de humor y quieren ir a perseguir a pacman. Esto se indica a través de las paredes de color rojo.</p>
+			<img src="img/instructions/instrucciones_chase.png">
+		</div>
+
+		<div>
+			<h2>Artículos</h2>
+			<h3>Píldoras</h3>
+			<p>El objetivo de cada nivel es comer todas las píldoras blancas sin ser atrapado por los hornos. Una píldora da 10 puntos.</p>
+			<h3>Píldora de poder</h3>
+			<p>En cada nivel hay 4 píldoras de poder, que son un poco más grandes que las normales. Si Pacman se las come, convertirá a los hornos en panes que se podrá comer. Una píldora de poder da 50 puntos.</p>
+			<img src="img/instructions/instrucciones_powerpill.png">
+			<p>Comerse a un horno da 100 puntos. El alma del pan volverá a la base para convertirse en horno nuevamente antes de empezar a perseguir a Pacman de nuevo.</p>
+		</div>
+
+	</div>
+</div>
+
+<!-- Info -->
+<div class="content" id="info-content">
+	<div class="button" id="back">&lt; atrás</div>
+	<div>
+		<h1>Info</h1>
+		<p>Version: Actual <span class="app-version">1.0.1 (2023-05-22)</span></p>
+		<p>Pacman LINHER, implementado por LINHER.</p>
+	</div>
+</div>
+
+
+
+<!-- contenido principal del juego -->
+<div class="content" id="game-content">
+	
+	<!-- contenido principal del juego -->
+	<div class="game wrapper">
+	
+		<div class="score">Puntos:</div>
+		<div class="level">Nvl:</div>
+		<div class="lives">Vidas: </div>
+		
+		<div class="controlSound">
+			<img src="img/audio-icon-mute.png" id="mute">
+		</div>
+		<!-- el lienzo se divide en campos de 18x13 -->
+		<div id="canvas-container">
+			<div id="canvas-overlay-container">
+				<div id="canvas-overlay-content">
+					<div id="title">Pacman LINHER</div>
+					<div><p id="text">Clic para Jugar</p></div>
+				</div>
+			</div>
+			<canvas id="myCanvas" width="540" height="390">
+			<p>Canvas no soportado</p>
+			</canvas>
+		</div>
+
+		<div class="controls" id="game-buttons">
+		<!-- Se trasladará a Instrucciones
+		<p class="nomobile">Usa las teclas W-A-S-D para navegar por Pac-Man</p>
+		-->
+		
+			<!-- Botones ANTIGUOS -->
+			<div>
+				<span id="up" class="controlButton">&uarr;</span>
+			</div>
+			<div>
+				<span id="left" class="controlButton">&larr;</span>
+				<span id="down" class="controlButton">&darr;</span>
+				<span id="right" class="controlButton">&rarr;</span>
+			</div>
+			
+		</div>
+		<!-- Fin de Controles en el Juego -->
+		
+		<!-- Menu del Juego-->		
+		<div class="controls" id="menu-buttons">
+			<ul>
+				<li class="button" id="newGame">Nuevo Juego</li>
+				<li class="button" id="highscore">Mejor puntuación</li>
+				<li class="button" id="instructions">Instrucciones</li>
+				<li class="button" id="info">Info</li>
+			</ul>
+			
+		</div>
+		<!-- Fin Menu del Juego -->
+		
+	</div>
+		
+	<div class="description nomobile">
+				
+		<span id="audio">
+			<audio id="theme" preload="auto">
+				<source src="wav/theme.wav" type="audio/wav">
+				<source src="mp3/theme.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="waka" preload="auto">
+				<source src="wav/waka.wav" type="audio/wav">
+				<source src="mp3/waka.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="die" preload="auto">
+				<source src="wav/die.wav" type="audio/wav">
+				<source src="mp3/die.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="powerpill" preload="auto">
+				<source src="wav/powerpill.wav" type="audio/wav">
+				<source src="mp3/powerpill.mp3" type="audio/mpeg">
+			</audio>
+		</span>
+		
+		
+	</div>
+
+</div>
+</div>
+</div>
+
+	<script src="pacman-canvas.js" type="text/javascript"></script>
+
+
+</body>
+</html>

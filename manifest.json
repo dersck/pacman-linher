@@ -1,0 +1,23 @@
+﻿{
+  "manifest_version": 2,
+  "name": "Pacman LINHER",
+  "version": "1.0.1",
+
+  "short_name": "Pacman LINHER",
+  "description": "Un viejo clásico para celebrar su día",
+
+  "author": "Geekota",
+
+  "icons": {
+    "128": "img/icon-128.png"
+  },
+
+  "offline_enabled": true,
+
+  "app": {
+    "urls": ["http://pacman.platzh1rsch.ch/"],
+    "launch": {
+      "web_url": "http://pacman.platzh1rsch.ch"
+    }
+  }
+}
